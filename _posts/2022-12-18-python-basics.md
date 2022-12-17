@@ -1,6 +1,11 @@
 ---
 layout: single
 title: "Study 01"
+last_modified_at: 2022-12-18T02:10
+categories:
+  - Lecture Notes
+tags:
+  - Hyunsu Go
 ---
 
 # Week 1
