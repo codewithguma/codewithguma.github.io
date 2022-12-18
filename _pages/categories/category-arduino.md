@@ -1,7 +1,7 @@
 ---
 title: "Arduino"
 layout: archive
-permalink: /#arduino
+permalink: /arduino
 ---
 
 
