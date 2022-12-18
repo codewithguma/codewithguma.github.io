@@ -20,5 +20,5 @@ sidebar-categories:
         url: "/project"
       - title: "Daily Coding"
         url: "/daily"
-      - titla: "Daily Arduino"
+      - titla: "Arduino"
         url: "/arduino"
