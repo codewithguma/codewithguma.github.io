@@ -10,3 +10,15 @@ main:
   #   url: /collection-archive/
   # - title: "Sitemap"
   #   url: /sitemap/
+  
+sidebar-categories:
+  - title: "Categories"
+    children:
+      - title: "Study"
+        url: "/study"
+      - title: "Science Project"
+        url: "/project"
+      - title: "Daily Coding"
+        url: "/daily"
+      - titla: "Daily Arduino"
+        url: "/arduino"
