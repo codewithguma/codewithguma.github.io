@@ -14,11 +14,11 @@ main:
 sidebar-categories:
   - title: "2022 Winter"
     children:
-      - title: "Study"
+      - title: "Study 🤯"
         url: "/study"
-      - title: "Science Project"
+      - title: "Science Project 😍"
         url: "/project"
-      - title: "Daily Coding"
+      - title: "Daily Coding 😎"
         url: "/daily"
-      - titla: "Arduino"
+      - titla: "Arduino 🤨"
         url: "/arduino"
