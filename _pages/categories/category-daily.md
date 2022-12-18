@@ -1,7 +1,7 @@
 ---
 title: "Daily Coding"
 layout: archive
-permalink: /#daily
+permalink: /daily
 ---
 
 
