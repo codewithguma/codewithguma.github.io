@@ -12,7 +12,7 @@ main:
   #   url: /sitemap/
   
 sidebar-categories:
-  - title: "Categories"
+  - title: "2022 Winter"
     children:
       - title: "Study"
         url: "/study"
