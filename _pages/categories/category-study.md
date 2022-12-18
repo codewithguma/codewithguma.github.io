@@ -1,7 +1,7 @@
 ---
 title: "Study"
 layout: archive
-permalink: /daily
+permalink: /study
 ---
 
 
