@@ -2,7 +2,6 @@
 layout: single
 title: "Monte Carlo method"
 categories:
-  - study
   - project
 tags:
   - 현수
