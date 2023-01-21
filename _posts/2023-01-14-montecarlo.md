@@ -1,3 +1,12 @@
+---
+layout: single
+title: "Monte Carlo method"
+categories:
+  - study
+tags:
+  - 현수
+---
+
 # Monte Carlo method
 
 <center><img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Pi_30K.gif" width=500/></center>
