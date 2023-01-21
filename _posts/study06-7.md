@@ -1,0 +1,918 @@
+# Week 6-7
+
+1/8/2023
+
+16:00-17:00
+17:00-18:00
+
+## Review
+
+### Lists
+
+list는 데이터를 묶어서 관리할 수 있는 자료형입니다!
+
+
+```python
+members = ['Soobin', 'Yeonjun', 'Beomgyu', 'Taehyun']
+print(members)
+print(type(members))
+```
+
+    ['Soobin', 'Yeonjun', 'Beomgyu', 'Taehyun']
+    <class 'list'>
+    
+
+#### 리스트의 인덱싱 및 슬라이싱
+
+리스트 역시 문자열처럼 인덱싱 및 슬라이싱을 적용할 수 있습니다.
+
+
+```python
+members[0]
+```
+
+
+
+
+    'Soobin'
+
+
+
+
+```python
+members[-1]
+```
+
+
+
+
+    'Taehyun'
+
+
+
+
+```python
+members[1:3]
+```
+
+
+
+
+    ['Yeonjun', 'Beomgyu']
+
+
+
+
+```python
+members[1:]
+```
+
+
+
+
+    ['Yeonjun', 'Beomgyu', 'Taehyun']
+
+
+
+
+```python
+members[:3]
+```
+
+
+
+
+    ['Soobin', 'Yeonjun', 'Beomgyu']
+
+
+
+#### 리스트의 연산
+
+##### 리스트 더하기(`+`)
+
+
+```python
+members += ['Huening Kai']
+print(members)
+```
+
+    ['Soobin', 'Yeonjun', 'Beomgyu', 'Taehyun', 'Huening Kai']
+    
+
+
+```python
+[1, 3, 5, 7] + [2, 4, 6, 8]
+```
+
+
+
+
+    [1, 3, 5, 7, 2, 4, 6, 8]
+
+
+
+##### 리스트 반복하기(`*`)
+
+
+```python
+a = [1, 2, 3]
+a * 3
+```
+
+
+
+
+    [1, 2, 3, 1, 2, 3, 1, 2, 3]
+
+
+
+
+```python
+"abc" * 3
+```
+
+
+
+
+    'abcabcabc'
+
+
+
+##### 리스트 길이 구하기(`len`)
+
+
+```python
+print(members)
+print(len(members))
+```
+
+    ['Soobin', 'Yeonjun', 'Beomgyu', 'Taehyun', 'Huening Kai']
+    5
+    
+
+
+```python
+len(members[0])
+```
+
+
+
+
+    6
+
+
+
+#### 리스트의 수정과 삭제
+
+리스트는 값을 수정하거나 삭제할 수 있습니다.
+
+
+```python
+members[2] = 'V'
+members
+```
+
+
+
+
+    ['Soobin', 'Yeonjun', 'V', 'Taehyun', 'Huening Kai']
+
+
+
+
+```python
+del members[2]
+members
+```
+
+
+
+
+    ['Soobin', 'Yeonjun', 'Taehyun', 'Huening Kai']
+
+
+
+
+```python
+a = [1, 2, 3, 4, 5]
+del a[2:]
+a
+```
+
+
+
+
+    [1, 2]
+
+
+
+#### 리스트 관련 함수들
+
+
+```python
+# 리스트에 요소 추가
+members.append('Haram')  # members += ['Haram']
+members
+```
+
+
+
+
+    ['Soobin', 'Yeonjun', 'Taehyun', 'Huening Kai', 'Haram']
+
+
+
+
+```python
+# 리스트 정렬
+a = [1, 4, 3, 2]
+a.sort()
+a
+```
+
+
+
+
+    [1, 2, 3, 4]
+
+
+
+
+```python
+# 리스트 뒤집기
+a = [1, 2, 3, 4]
+a.reverse()
+a
+```
+
+
+
+
+    [4, 3, 2, 1]
+
+
+
+
+```python
+# 인덱스 반환
+mentee = ['하람', '종원', '서빈']
+mentee.index('종원')
+```
+
+
+
+
+    1
+
+
+
+
+```python
+mentee.index('현수')
+```
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    <ipython-input-25-d1caa768e3d4> in <module>
+    ----> 1 mentee.index('현수')
+    
+
+    ValueError: '현수' is not in list
+
+
+
+```python
+# 리스트에 포함된 특정 요소의 개수 세기
+a = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5]
+a.count(3)
+```
+
+
+
+
+    3
+
+
+
+더 많은 함수는 [여기로](https://wikidocs.net/14)
+
+### The `map` function
+
+`map({function}, {list})`의 형태로 `list`의 각 요소에 `function`을 적용할 수 있습니다.
+
+
+```python
+mentee = ["하람", "종원", "서빈"]
+
+def name_dec(name):
+    return name + "??!"
+
+list(map(name_dec, mentee))  # ['하람??!', ... ]
+```
+
+
+
+
+    ['하람??!', '종원??!', '서빈??!']
+
+
+
+### `map(int, input().split())`
+
+백준에서 여러 개의 입력을 받을 때 사용하는 코드입니다.
+
+
+```python
+temp1 = input()
+print('input()')
+print(end='\t'); print(temp1); print(end='\t'); print(type(temp1))
+
+temp2 = temp1.split()
+print('input().split()')
+print(end='\t'); print(temp2); print(end='\t'); print(type(temp2))
+print(end='\t'); print(temp2[0]); print(end='\t'); print(type(temp2[0]))
+
+temp3 = map(int, temp2)
+print('map(int, input().split())')
+print(end='\t'); print(temp3); print(end='\t'); print(type(temp3))
+
+temp4 = list(temp3)
+print('list(map(int, input().split()))')
+print(end='\t'); print(temp4); print(end='\t'); print(type(temp4))
+print(end='\t'); print(temp4[0]); print(end='\t'); print(type(temp4[0]))
+```
+
+    2023 1 8 4 11
+    input()
+    	2023 1 8 4 11
+    	<class 'str'>
+    input().split()
+    	['2023', '1', '8', '4', '11']
+    	<class 'list'>
+    	2023
+    	<class 'str'>
+    map(int, input().split())
+    	<map object at 0x7fc2a28327c0>
+    	<class 'map'>
+    list(map(int, input().split()))
+    	[2023, 1, 8, 4, 11]
+    	<class 'list'>
+    	2023
+    	<class 'int'>
+    
+
+### Exercises
+
+#### 9091: 소수 판정
+
+1 보다 큰 정수 P 가 1 과 P 자신 이외의 양의 약수를 가지지 않을 때의 P 를 소수라고 부른다. 이를테면, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31 등은 모두 소수이다. 4, 6, 16 등과 같이 소수가 아니면서 2 이상인 자연수를 합성수라고 정의하며, 1 은 소수도 아니고 합성수도 아닌 수이다.
+
+주어진 자연수 N 이 소수인지 아닌지를 판정하라. 
+
+##### 소수 판정하기
+
+
+```python
+def is_prime(n):
+    if n == 1: return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+```
+
+
+```python
+is_prime(1)
+```
+
+
+
+
+    False
+
+
+
+
+```python
+is_prime(97)
+```
+
+
+
+
+    True
+
+
+
+
+```python
+is_prime(91)
+```
+
+
+
+
+    False
+
+
+
+##### 예시 답안
+
+
+```python
+def is_prime(n):
+    if n == 1: return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+
+for _ in range(int(input())):
+    print('YES' if is_prime(int(input())) else 'NO')
+```
+
+    3
+    7
+    YES
+    15
+    NO
+    31
+    YES
+    
+
+##### 100 이하의 소수
+
+
+```python
+list(range(5))  # 0, 1, 2, 3, 4
+```
+
+
+
+
+    [0, 1, 2, 3, 4]
+
+
+
+
+```python
+[2 * i for i in range(5)]
+```
+
+
+
+
+    [0, 2, 4, 6, 8]
+
+
+
+
+```python
+[i ** 2 for i in range(5)]
+```
+
+
+
+
+    [0, 1, 4, 9, 16]
+
+
+
+
+```python
+[i ** 3 for i in range(5)]
+```
+
+
+
+
+    [0, 1, 8, 27, 64]
+
+
+
+
+```python
+[i for i in range(5) if i % 2 == 0]
+```
+
+
+
+
+    [0, 2, 4]
+
+
+
+
+```python
+prime_numbers = [i for i in range(1, 101) if is_prime(i)]
+print(prime_numbers)
+```
+
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+    
+
+
+```python
+print(len(prime_numbers))
+```
+
+    25
+    
+
+##### 에라토스테네스의 체
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Sieve_of_Eratosthenes_animation.gif"/>
+
+
+```python
+prime_numbers = [i for i in range(2, 101)]
+for i in range(2, 101):
+    if i in prime_numbers:
+        j = 2
+        while i * j <= 100:
+            if i * j in prime_numbers:
+                prime_numbers.remove(i * j)
+            j += 1
+print(prime_numbers)
+print(len(prime_numbers))
+```
+
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+    25
+    
+
+#### 1929: 소수 구하기
+
+M 이상 N 이하의 소수를 모두 출력하는 프로그램을 작성하시오.
+
+
+```python
+m, n = map(int, input().split())
+def is_prime(n):
+    if n == 1: return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+for i in range(m, n + 1):
+    if is_prime(i):
+        print(i)
+```
+
+    3 16
+    3
+    5
+    7
+    11
+    13
+    
+
+#### 1978: 소수 찾기
+
+주어진 수 N개 중에서 소수가 몇 개인지 찾아서 출력하는 프로그램을 작성하시오.
+
+
+```python
+_ = input()
+numbers = list(map(int, input().split()))
+
+def is_prime(n):
+    if n == 1: return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+
+print(list(map(is_prime, numbers)).count(True))
+```
+
+    4
+    1 3 5 7
+    3
+    
+
+#### 2153: 소수 단어
+
+단어가 주어졌을 때, 그 단어가 소수 단어인지 판별하는 프로그램을 작성하시오.
+
+
+```python
+
+```
+
+#### 6884: 소수 부분 수열
+
+수열이 주어졌을 때, 길이가 가장 짧은 소수 부분 수열을 구하는 프로그램을 작성하시오.
+
+
+```python
+
+```
+
+#### 1016: 제곱 ㄴㄴ 수
+
+어떤 정수 X가 1보다 큰 제곱수로 나누어 떨어지지 않을 때, 그 수를 제곱ㄴㄴ수라고 한다. 제곱수는 정수의 제곱이다. min과 max가 주어지면, min보다 크거나 같고, max보다 작거나 같은 제곱ㄴㄴ수가 몇 개 있는지 출력한다.
+
+
+```python
+min, max = map(int, input().split())
+numbers = list(range(min, max + 1))
+def is_square_nono(n):
+    i = 2
+    while i * i <= n:
+        if n % (i * i) == 0:
+            return False
+        i += 1
+    return True
+results = list(map(is_square_nono, numbers))
+print(results.count(True))
+```
+
+    1 1000
+    608
+    
+
+
+```python
+min, max = map(int, input().split())
+is_square_nono = [True] * (max - min + 1)
+
+i = 2
+while i * i <= max:
+    j = ((min - 1) // (i * i) + 1) * (i * i)
+    while j <= max:
+        index = j - min
+        is_square_nono[index] = False
+        j += i * i
+    i += 1
+
+print(is_square_nono.count(True))
+```
+
+    1 1000
+    608
+    
+
+## List comprehension
+An intuitive and concise way to create lists.
+
+
+```python
+# ** power symbol
+[i**2 for i in range(6)]
+```
+
+
+
+
+    [0, 1, 4, 9, 16, 25]
+
+
+
+
+```python
+[0 for _ in range(5)]  #use _ if you don't need the variable
+```
+
+
+
+
+    [0, 0, 0, 0, 0]
+
+
+
+Use **if conditionals** to filter out elements
+
+
+```python
+[i**2 for i in range(5) if i%2==1]
+```
+
+
+
+
+    [1, 9]
+
+
+
+You can use **multiple for clauses**
+
+
+```python
+my_list = []
+for i in range(2):
+    for j in range(4):
+        my_list.append(i + j)
+print(my_list)
+```
+
+    [0, 1, 2, 3, 1, 2, 3, 4]
+    
+
+
+```python
+[i+j for i in range(2) for j in range(4)]
+```
+
+
+
+
+    [0, 1, 2, 3, 1, 2, 3, 4]
+
+
+
+
+```python
+[i+j for j in range(4) for i in range(2)]  #What is the difference?
+```
+
+
+
+
+    [0, 1, 1, 2, 2, 3, 3, 4]
+
+
+
+
+```python
+#For loop equivalent to the list comprehension
+L = []
+for i in range(2):
+    for j in range(4):
+        L.append(i+j)
+print(L)
+```
+
+
+```python
+[[i+j for i in range(2)] for j in range(4)]
+```
+
+
+```python
+[[i+j for j in range(4)] for i in range(2)]  #what there a difference?
+```
+
+__Exercise__ : Use a list comprehension to create:  [[1,2,3],[2,4,6],[3,6,9],[4,8,12]].
+
+
+```python
+
+```
+
+__Exercise__ : Use a list comprehension to create:[0,0,0,0,1,2,0,2,4,0,3,6,0,4,8,0,5,10].
+
+
+```python
+
+```
+
+## Modules
+
+Modules are packages with classes and functions. You `import` a module to use it.<br>
+
+
+```python
+import random  # import random module
+
+# We can now use functions from the random module
+print(random.random())  # uniform real in [0,1]
+print(random.randint(1,3))  # uniform integer in {1,2,3}
+L=[3,4,5]
+random.shuffle(L)  # uniform shuffle of a list
+print(L)
+print(random.sample(L,2))  # uniform sampling
+```
+
+    0.7060015855551015
+    3
+    [3, 5, 4]
+    [4, 5]
+    
+
+If you plan to use a module often, shorten the name with `as`.
+
+
+```python
+import random as rnd
+rnd.random()
+```
+
+
+
+
+    0.4049801415178007
+
+
+
+
+```python
+from random import random
+random()
+# random.random()
+```
+
+
+
+
+    0.42778237836412647
+
+
+
+You can import everything from a module and use the functions directly without naming the module. I think this is bad practice because we completely lose track of where the functions come from and, more importantly, the risk of name conflicts increase.
+
+
+```python
+from random import * #this is bad
+from math import *
+
+print(random())  #from which module does random come from?
+log(5)  #Function logs (keeps record of) the number 5. (Just kidding. It computes the natural logarithm.) 
+```
+
+    0.4450467005500016
+    
+
+
+
+
+    1.6094379124341003
+
+
+
+The previous code block did some bad things (for demonstration purposes). Let's clear everything with `%reset`
+
+
+```python
+%reset
+```
+
+Import specific features from a module with `from module import <thing>` and later use it without referring to the module name. This adds convenience without being reckless as `from module import *`.
+
+
+```python
+import numpy as np
+from numpy.linalg import eigvals   #specifically import eigvals
+
+A = np.matrix([[0, 0, 0, 0, 30/8],
+               [1, 0, 0, 0, -67/8],
+               [0, 1, 0, 0, -13/8],
+               [0, 0, 1, 0, 54/8],
+               [0, 0, 0, 1, 4/8]])
+
+
+# print(np.linalg.eigvals(A))  # function call is a bit long and cumbersome
+print(eigvals(A))  # we can call eigvals without referring to the module name
+```
+
+Reference: [Ernest K. Ryu](http://www.math.snu.ac.kr/~ernestryu/courses/deep_learning.html)
+
+## Arduino: 신호등🚦
+
+```arduino
+int R = 8;
+int Y = 9;
+int G = 10;
+
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize digital pin LED as an output.
+  // Serial.begin(9600);
+  pinMode(R, OUTPUT);
+  pinMode(Y, OUTPUT);
+  pinMode(G, OUTPUT);
+}
+
+void turn_off() {
+  digitalWrite(R, LOW);
+  digitalWrite(Y, LOW);
+  digitalWrite(G, LOW);
+}
+
+void turn_on(int COLOR) {
+  digitalWrite(COLOR, HIGH);
+  delay(1000);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  turn_on(R);
+  turn_off();
+  turn_on(Y);
+  turn_off();
+  turn_on(G);
+  turn_off();
+}
+```

@@ -1,0 +1,1539 @@
+# Week 10
+
+1/21/2023
+
+19:00-20:00
+
+## Baekjoon exercises
+
+### [문자열](https://www.acmicpc.net/step/7)
+
+문자열을 다루는 문제들을 해결해 봅시다.
+
+[11654번: 아스키 코드](https://www.acmicpc.net/problem/11654)
+
+알파벳 소문자, 대문자, 숫자 0-9중 하나가 주어졌을 때, 주어진 글자의 아스키 코드값을 출력하는 프로그램을 작성하시오.
+
+- 문자를 아스키 코드로 변환할 때 `ord()`를 이용한다.
+
+
+```python
+print(ord(input()[0]))
+```
+
+    A
+    65
+    
+
+[11720번: 숫자의 합](https://www.acmicpc.net/problem/11720)
+
+N개의 숫자가 공백 없이 쓰여있다. 이 숫자를 모두 합해서 출력하는 프로그램을 작성하시오.
+
+- 문자열은 문자의 리스트로 여길 수 있다.
+
+
+```python
+input()
+print(sum(int(i) for i in input()))
+```
+
+    5
+    54321
+    15
+    
+
+[2675번: 문자열 반복](https://www.acmicpc.net/problem/2675)
+
+문자열 S를 입력받은 후에, 각 문자를 R번 반복해 새 문자열 P를 만든 후 출력하는 프로그램을 작성하시오. 즉, 첫 번째 문자를 R번 반복하고, 두 번째 문자를 R번 반복하는 식으로 P를 만들면 된다. S에는 QR Code "alphanumeric" 문자만 들어있다.
+
+QR Code "alphanumeric" 문자는 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\$%*+-./: 이다.
+
+
+```python
+for _ in range(int(input())):
+    R, S = input().split()
+    R = int(R)
+    print("".join([i * R for i in S]))
+```
+
+    2
+    3 ABC
+    AAABBBCCC
+    5 /HTP
+    /////HHHHHTTTTTPPPPP
+    
+
+[1157번: 단어 공부](https://www.acmicpc.net/problem/1157)
+
+알파벳 대소문자로 된 단어가 주어지면, 이 단어에서 가장 많이 사용된 알파벳이 무엇인지 알아내는 프로그램을 작성하시오. 단, 대문자와 소문자를 구분하지 않는다.
+
+
+```python
+word = input().upper()
+counts = {}
+for letter in word:
+    if letter in counts:
+        counts[letter] += 1
+    else:
+        counts[letter] = 1
+sorted_counts = sorted(counts.items(), key=lambda item: item[1], reverse=True)
+if len(sorted_counts) >= 2 and sorted_counts[0][1] == sorted_counts[1][1]:
+    print('?')
+else:
+    print(sorted_counts[0][0])
+```
+
+    Mississipi
+    ?
+    
+
+집합(set) 자료형은 중복을 허용하지 않으며, 순서가 없다는 특징을 지닙니다.
+
+
+```python
+s = 'MISSISSIPI'
+sorted({*s, '?'}, key=s.count)  # {,}: set
+```
+
+
+
+
+    ['?', 'P', 'M', 'S', 'I']
+
+
+
+
+```python
+# short coding
+s = input().upper()
+c = s.count
+*_, a, b = v = sorted({*s, '?'}, key=c)
+print(v[-(c(a)<c(b))])
+```
+
+[2908번: 상수](https://www.acmicpc.net/problem/2908)
+
+상수는 수를 다른 사람과 다르게 거꾸로 읽는다. 예를 들어, 734와 893을 칠판에 적었다면, 상수는 이 수를 437과 398로 읽는다. 따라서, 상수는 두 수중 큰 수인 437을 큰 수라고 말할 것이다.
+
+두 수가 주어졌을 때, 상수의 대답을 출력하는 프로그램을 작성하시오.
+
+
+```python
+print(max(map(lambda x: int(x[::-1]), input().split())))
+```
+
+    839 237
+    938
+    
+
+
+```python
+print(max(input()[::-1].split()))
+```
+
+    734 893
+    437
+    
+
+[2931번: 크로아티아 알파벳](https://www.acmicpc.net/problem/2941)
+
+단어가 주어졌을 때, 몇 개의 크로아티아 알파벳으로 이루어져 있는지 출력한다.
+
+
+```python
+word = input()
+alphabets = ['c=', 'c-', 'dz=', 'd-', 'lj', 'nj', 's=', 'z=']
+print(len(word) - sum([word.count(alphabet) for alphabet in alphabets]))
+```
+
+    ddz=z=
+    3
+    
+
+정규표현식(regular expression)과 관련된 `re` 모듈을 이용할 수도 있습니다!
+
+
+```python
+import re
+print(len(re.sub('dz=|[ln]j|\w\W','-',input())))
+```
+
+    ljes=njak
+    6
+    
+
+[5622번: 다이얼](https://www.acmicpc.net/problem/5622)
+
+할머니가 외운 단어가 주어졌을 때, 이 전화를 걸기 위해서 필요한 최소 시간을 구하는 프로그램을 작성하시오.
+
+
+```python
+def letter2time(letter):
+    order = ord(letter)
+    if order >= ord('Z'): order -= 1
+    if order >= ord('S'): order -= 1
+    return (order - ord('A')) // 3 + 3
+print(sum(map(letter2time, input())))
+```
+
+    UNUCIC
+    36
+    
+
+
+```python
+# short coding
+print(sum(5 * min(ord(x), 88) // 16 - 17 for x in input()))
+```
+
+    WA
+    13
+    
+
+[1316번: 그룹 단어 체커](https://www.acmicpc.net/problem/1316)
+
+그룹 단어란 단어에 존재하는 모든 문자에 대해서, 각 문자가 연속해서 나타나는 경우만을 말한다. 예를 들면, ccazzzzbb는 c, a, z, b가 모두 연속해서 나타나고, kin도 k, i, n이 연속해서 나타나기 때문에 그룹 단어이지만, aabbbccb는 b가 떨어져서 나타나기 때문에 그룹 단어가 아니다.
+
+단어 N개를 입력으로 받아 그룹 단어의 개수를 출력하는 프로그램을 작성하시오.
+
+
+```python
+def is_group_word(word):
+    while len(word) > 0:
+        letter = word[0]
+        word = word[1:]
+        while len(word) > 0 and word[0] == letter:
+            word = word[1:]
+        if letter in word:
+            return False
+    return True
+words = [input() for _ in range(int(input()))]
+print(len([word for word in words if is_group_word(word)]))
+```
+
+    4
+    aba
+    abab
+    abcabc
+    a
+    1
+    
+
+`str`의 `find()`를 이용할 수도 있습니다!
+
+
+```python
+n = 0
+for _ in range(int(input())):
+    word = input()
+    n += list(word) == sorted(word, key=word.find)
+print(n)
+```
+
+    3
+    happy
+    new
+    year
+    3
+    
+
+### [기본 수학 1](https://www.acmicpc.net/step/8)
+
+수학 문제로 수학적 사고력을 길러 봅시다.
+
+[1712번: 손익분기점](https://www.acmicpc.net/problem/1712)
+
+생산 대수를 늘려 가다 보면 어느 순간 총 수입(판매비용)이 총 비용(=고정비용+가변비용)보다 많아지게 된다. 최초로 총 수입이 총 비용보다 많아져 이익이 발생하는 지점을 손익분기점(BREAK-EVEN POINT)이라고 한다. 고정 비용 A, 가변 비용 B, 노트북 가격 C가 주어졌을 때, 손익분기점을 구하는 프로그램을 작성하시오.
+
+
+```python
+# (C-B)*(n-1) <= A < (C-B)*n
+# n-1 <= A/(C-B) < n
+A, B, C = map(int, input().split())
+print(1+A//(C-B) if C>B else -1)
+```
+
+    2100000000 9 10
+    2100000001
+    
+
+[2292번: 벌집](https://www.acmicpc.net/problem/2292)
+
+육각형으로 이루어진 벌집이 있다. 중앙의 방 1부터 시작해서 이웃하는 방에 돌아가면서 1씩 증가하는 번호를 주소로 매길 수 있다. 숫자 N이 주어졌을 때, 벌집의 중앙 1에서 N번 방까지 최소 개수의 방을 지나서 갈 때 몇 개의 방을 지나가는지(시작과 끝을 포함하여)를 계산하는 프로그램을 작성하시오. 예를 들면, 13까지는 3개, 58까지는 5개를 지난다.
+
+
+```python
+# k-th: k * 6 (k >= 1)
+N, k = int(input())-1, 0
+while N > 0:
+    k += 1
+    N -= 6*k
+print(k+1)
+```
+
+    20
+    4
+    
+
+
+```python
+# k-th: 3(k-1)k < N-1 <= 3k(k+1)
+# (2k-1)^2 < (4N-1)/3 <= (2k+1)^2
+# 2k-1 < ((4N-1)/3)^0.5 <= 2k+1
+# k-1 < (((4N-1)/3)^0.5-1)/2 <= k
+import math
+print(math.ceil((((4*int(input())-1)/3)**0.5-1)/2)+1)
+```
+
+    13
+    3
+    
+
+[1193번: 분수찾기](https://www.acmicpc.net/problem/1193)
+
+분수들을 1/1 → 1/2 → 2/1 → 3/1 → 2/2 → … 과 같은 지그재그 순서로 차례대로 1번, 2번, 3번, 4번, 5번, … 분수라고 하자. X가 주어졌을 때, X번째 분수를 구하는 프로그램을 작성하시오.
+
+
+```python
+n = int(input())
+k = 1
+while n > k:
+    n -= k
+    k += 1
+print('/'.join([str(k+1-n), str(n)][::2*(k%2)-1]))
+```
+
+    4
+    3/1
+    
+
+
+```python
+#effective code
+from math import ceil
+X = int(input())
+# (k-1)k/2 < X <= k(k+1)/2
+# (2k-1)^2 < 8X+1 <= (2k+1)^2
+# 2k-1 < (8X+1)^0.5 <= 2k+1
+# k-1 < (-1+(8X+1)^0.5)/2 <= k
+k = ceil((-1+(8*X+1)**0.5)/2)
+a = X - (k-1)*k//2
+print(f"{a}/{k+1-a}" if k%2==0 else f"{k+1-a}/{a}")
+```
+
+    14
+    2/4
+    
+
+[2869번: 달팽이는 올라가고 싶다](https://www.acmicpc.net/problem/2869)
+
+땅 위에 달팽이가 있다. 이 달팽이는 높이가 V미터인 나무 막대를 올라갈 것이다. 달팽이는 낮에 A미터 올라갈 수 있다. 하지만, 밤에 잠을 자는 동안 B미터 미끄러진다. 또, 정상에 올라간 후에는 미끄러지지 않는다. 달팽이가 나무 막대를 모두 올라가려면, 며칠이 걸리는지 구하는 프로그램을 작성하시오.
+
+
+```python
+A, B, V = map(int, input().split())
+# (A-B)*(n-2)+A < V <= (A-B)*(n-1)+A
+# n-2 < (V-A)/(A-B) <= n-1
+# -n+1 <= -(V-A)/(A-B) < -n+2
+# -n+1 = (A-V))//(A-B)
+# n = 1 - (A-V)//(A-B)
+print(1 - (A-V)//(A-B))
+```
+
+    100 99 1000000000
+    999999901
+    
+
+[10250번: ACM 호텔](https://www.acmicpc.net/problem/10250)
+
+초기에 모든 방이 비어있다고 가정하에 정책에 따라 N 번째로 도착한 손님에게 배정될 방 번호를 계산하는 프로그램을 작성하시오.
+
+
+```python
+for _ in range(int(input())):
+    H, _, N = map(int, input().split())
+    print((N-1)//H+1 + 100*(N%H if N%H!=0 else H))
+```
+
+    2
+    10 10 100
+    1010
+    10 10 99
+    910
+    
+
+[2775번: 부녀회장이 될테야](https://www.acmicpc.net/problem/2775)
+
+이 아파트에 거주를 하려면 조건이 있는데, “a층의 b호에 살려면 자신의 아래(a-1)층의 1호부터 b호까지 사람들의 수의 합만큼 사람들을 데려와 살아야 한다” 는 계약 조항을 꼭 지키고 들어와야 한다.
+
+아파트에 비어있는 집은 없고 모든 거주민들이 이 계약 조건을 지키고 왔다고 가정했을 때, 주어지는 양의 정수 k와 n에 대해 k층에 n호에는 몇 명이 살고 있는지 출력하라. 단, 아파트에는 0층부터 있고 각층에는 1호부터 있으며, 0층의 i호에는 i명이 산다.
+
+
+```python
+for _ in range(int(input())):
+    k, n = int(input()), int(input())
+    res = [[i for i in range(1, n+1)]] + [[0] * n for _ in range(k)]
+    for a in range(1, k+1):
+        for b in range(n):
+            res[a][b] = sum(res[a-1][i] for i in range(b+1))
+    print(res[k][n-1])
+```
+
+    2
+    1
+    3
+    6
+    2
+    3
+    10
+    
+
+[2839번: 설탕 배달](https://www.acmicpc.net/problem/2839)
+
+상근이는 요즘 설탕공장에서 설탕을 배달하고 있다. 상근이는 지금 사탕가게에 설탕을 정확하게 N킬로그램을 배달해야 한다. 설탕공장에서 만드는 설탕은 봉지에 담겨져 있다. 봉지는 3킬로그램 봉지와 5킬로그램 봉지가 있다. 상근이가 설탕을 정확하게 N킬로그램 배달해야 할 때, 봉지 몇 개를 가져가면 되는지 그 수를 구하는 프로그램을 작성하시오.
+
+
+```python
+[3 * i % 5 for i in range(5)]
+```
+
+
+
+
+    [0, 3, 1, 4, 2]
+
+
+
+
+```python
+m = [0, 2, 4, 1, 3]
+N = int(input())  # 3*i+5*j=N
+i = m[N%5]
+j = (N - 3*i) // 5
+print(i+j if j >= 0 else -1)
+```
+
+    11
+    3
+    
+
+[10757번: 큰 수 A+B](https://www.acmicpc.net/problem/10757)
+
+두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.
+
+
+```python
+a, b = map(lambda x: x[::-1], input().split())
+answer = ''
+carry = 0
+while len(a)>0 or len(b)>0:
+    temp = carry
+    if len(a) > 0:
+        temp += int(a[0])
+        a = a[1:]
+    if len(b) > 0:
+        temp += int(b[0])
+        b = b[1:]
+    carry = temp//10
+    answer += str(temp%10)
+if carry == 1:
+    answer += '1'
+print(answer[::-1])
+```
+
+    9223372036854775807 9223372036854775808
+    18446744073709551615
+    
+
+### [기본 수학 2](https://www.acmicpc.net/step/10)
+
+소수와 기하를 다뤄 봅시다.
+
+[2581번: 소수](https://www.acmicpc.net/problem/2581)
+
+자연수 M과 N이 주어질 때 M이상 N이하의 자연수 중 소수인 것을 모두 골라 이들 소수의 합과 최솟값을 찾는 프로그램을 작성하시오.
+
+예를 들어 M=60, N=100인 경우 60이상 100이하의 자연수 중 소수는 61, 67, 71, 73, 79, 83, 89, 97 총 8개가 있으므로, 이들 소수의 합은 620이고, 최솟값은 61이 된다.
+
+
+```python
+M, N = int(input()), int(input())
+prime = list(range(max(2, M), N+1))
+for j in range(2, int(N**0.5)+1):
+    prime = [i for i in prime if i<=j or i%j!=0]
+if len(prime) == 0:
+    print(-1)
+else:
+    print(sum(prime))
+    print(prime[0])
+```
+
+    60
+    100
+    620
+    61
+    
+
+[11653번: 소인수분해](https://www.acmicpc.net/problem/11653)
+
+정수 N이 주어졌을 때, 소인수분해하는 프로그램을 작성하시오.
+
+
+```python
+N = int(input())
+temp = list(range(2, int(N**0.5)+1))
+while len(temp) > 0:
+    p, *temp = temp
+    while N%p==0:
+        print(p)
+        N //= p
+    temp = [i for i in temp if i%p!=0]
+if N > 1:
+    print(N)
+```
+
+    72
+    2
+    2
+    2
+    3
+    3
+    
+
+[1929번: 소수 구하기](https://www.acmicpc.net/problem/1929)
+
+M 이상 N 이하의 소수를 모두 출력하는 프로그램을 작성하시오.
+
+
+```python
+m, n = map(int, input().split())
+# 예전에 작성한 소수 판정 function 이용
+def is_prime(n):
+    if n == 1: return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+for i in range(m, n + 1):
+    if is_prime(i):
+        print(i)
+```
+
+[4948번: 베르트랑 공준](https://www.acmicpc.net/problem/4948)
+
+자연수 n이 주어졌을 때, n보다 크고, 2n보다 작거나 같은 소수의 개수를 구하는 프로그램을 작성하시오.
+
+
+```python
+# 2581번 이용 -- inefficient code
+def count_ps(M, N):
+    prime = list(range(max(2, M), N+1))
+    for j in range(2, int(N**0.5)+1):
+        prime = [i for i in prime if i<=j or i%j!=0]
+    if len(prime) == 0:
+        print(-1)
+    else:
+        return len(prime)
+while (M := int(input())) > 0:
+    print(count_ps(M+1, 2*M))
+```
+
+    1000
+    135
+    10000
+    1033
+    100000
+    8392
+    0
+    
+
+
+```python
+# efficient code (using memory)
+is_prime = [0, 0]
+while (M := int(input())) > 0:
+    if 2*M+1 > len(is_prime):
+        is_prime += [1] * (2*M+1-len(is_prime))
+        for i in range(2, int((2*M)**0.5)+1):
+            if is_prime[i] == 1:
+                j = 2
+                while i*j <= 2*M:
+                    is_prime[i*j] = 0
+                    j += 1
+    print(is_prime[M+1:2*M+1].count(1))
+```
+
+    1
+    1
+    10
+    4
+    13
+    3
+    100000
+    8392
+    0
+    
+
+
+```python
+
+```
+
+[9020번: 골드바흐의 추측](https://www.acmicpc.net/step/10)
+
+2보다 큰 짝수 n이 주어졌을 때, n의 골드바흐 파티션을 출력하는 프로그램을 작성하시오. 만약 가능한 n의 골드바흐 파티션이 여러 가지인 경우에는 두 소수의 차이가 가장 작은 것을 출력한다.
+
+
+```python
+is_prime = [False, False]
+for _ in range(int(input())):
+    n = int(input())
+    if n+1 > len(is_prime):
+        is_prime += [True] * (n+1-len(is_prime))
+        for i in range(2, int((n)**0.5)+1):
+            if is_prime[i]:
+                j = 2
+                while i*j <= n:
+                    is_prime[i*j] = False
+                    j += 1
+    # n = 4k:   a = 2k-1, b = 2k+1
+    # n = 4k+2: a = 2k+1, b = 2k+1
+    b = 2*(n//4)+1 if n > 4 else 2
+    a = n - b
+    while not (is_prime[a] and is_prime[b]):
+        a -= 2
+        b += 2
+    print(f"{a} {b}")
+```
+
+    2
+    4
+    2 2
+    16
+    5 11
+    
+
+### [2차원 배열](https://www.acmicpc.net/step/2)
+
+배열 안에 배열이 있다면 어떨까요? 2차원 배열을 만들어 봅시다.
+
+[2566번: 최댓값](https://www.acmicpc.net/problem/2566)
+
+첫째 줄에 최댓값을 출력하고, 둘째 줄에 최댓값이 위치한 행 번호와 열 번호를 빈칸을 사이에 두고 차례로 출력한다. 최댓값이 두 개 이상인 경우 그 중 한 곳의 위치를 출력한다.
+
+
+```python
+A = [[int(i) for i in input().split()] for _ in range(9)]
+mv = mx = my = -1
+for i in range(9):
+    for j in range(9):
+        if mv < A[i][j]:
+            mv, mx, my = A[i][j], i, j
+print(mv)
+print(mx+1, my+1)
+```
+
+    25 87 65 15 28 11 37 28 74
+    25 87 65 15 28 11 37 28 74
+    25 87 65 15 28 11 37 28 74
+    25 87 65 15 28 11 37 28 74
+    25 87 65 15 28 11 37 28 74
+    25 87 65 15 28 11 37 28 74
+    25 87 65 15 28 11 37 28 74
+    25 87 65 15 28 11 37 28 74
+    25 87 65 15 28 11 37 28 74
+    87
+    1 2
+    
+
+### [재귀](https://www.acmicpc.net/step/19)
+
+재귀함수를 다뤄 봅시다.
+
+[10872번: 팩토리얼](https://www.acmicpc.net/problem/10872)
+
+0보다 크거나 같은 정수 N이 주어진다. 이때, N!을 출력하는 프로그램을 작성하시오.
+
+
+```python
+def factorial(n):
+    if n <= 1: return 1
+    return n * factorial(n-1)
+print(factorial(int(input())))
+```
+
+    10
+    3628800
+    
+
+[10870번: 피보나치 수 5](https://www.acmicpc.net/problem/10870)
+
+n이 주어졌을 때, n번째 피보나치 수를 구하는 프로그램을 작성하시오.
+
+
+```python
+def fibonacci(n):
+    if n <= 1: return n
+    return fibonacci(n-1) + fibonacci(n-2)
+print(fibonacci(int(input())))
+```
+
+    10
+    55
+    
+
+[25501번: 재귀의 귀재](https://www.acmicpc.net/problem/25501)
+
+```C
+#include <stdio.h>
+#include <string.h>
+
+int recursion(const char *s, int l, int r){
+    if(l >= r) return 1;
+    else if(s[l] != s[r]) return 0;
+    else return recursion(s, l+1, r-1);
+}
+
+int isPalindrome(const char *s){
+    return recursion(s, 0, strlen(s)-1);
+}
+
+int main(){
+    printf("ABBA: %d\n", isPalindrome("ABBA")); // 1
+    printf("ABC: %d\n", isPalindrome("ABC"));   // 0
+}
+```
+
+정휘는 위에 작성된 isPalindrome 함수를 이용하여 어떤 문자열이 팰린드롬인지 여부를 판단하려고 한다. 정휘를 따라 여러분도 함수의 반환값과 recursion 함수의 호출 횟수를 구해보자.
+
+
+```python
+"abc"[1:-1]
+```
+
+
+
+
+    'b'
+
+
+
+
+```python
+def recursion(s, t=0):
+    t += 1
+    if len(s) <= 1:
+        return f"1 {t}"
+    if s[0] != s[-1]:
+        return f"0 {t}"
+    return recursion(s[1:-1], t)
+
+for _ in range(int(input())):
+    print(recursion(input()))
+```
+
+    5
+    AAA
+    1 2
+    ABBA
+    1 3
+    ABABA
+    1 3
+    ABCA
+    0 2
+    PALINDROME
+    0 1
+    
+
+[알고리즘 수업 - 병합 정렬 1](https://www.acmicpc.net/problem/24060)
+
+크기가 N인 배열에 대한 병합 정렬 의사 코드는 다음과 같다.
+
+```
+merge_sort(A[p..r]) { # A[p..r]을 오름차순 정렬한다.
+    if (p < r) then {
+        q <- ⌊(p + r) / 2⌋;       # q는 p, r의 중간 지점
+        merge_sort(A, p, q);      # 전반부 정렬
+        merge_sort(A, q + 1, r);  # 후반부 정렬
+        merge(A, p, q, r);        # 병합
+    }
+}
+
+# A[p..q]와 A[q+1..r]을 병합하여 A[p..r]을 오름차순 정렬된 상태로 만든다.
+# A[p..q]와 A[q+1..r]은 이미 오름차순으로 정렬되어 있다.
+merge(A[], p, q, r) {
+    i <- p; j <- q + 1; t <- 1;
+    while (i ≤ q and j ≤ r) {
+        if (A[i] ≤ A[j])
+        then tmp[t++] <- A[i++]; # tmp[t] <- A[i]; t++; i++;
+        else tmp[t++] <- A[j++]; # tmp[t] <- A[j]; t++; j++;
+    }
+    while (i ≤ q)  # 왼쪽 배열 부분이 남은 경우
+        tmp[t++] <- A[i++];
+    while (j ≤ r)  # 오른쪽 배열 부분이 남은 경우
+        tmp[t++] <- A[j++];
+    i <- p; t <- 1;
+    while (i ≤ r)  # 결과를 A[p..r]에 저장
+        A[i++] <- tmp[t++]; 
+}
+```
+
+배열 A에 K 번째 저장 되는 수를 출력한다. 저장 횟수가 K 보다 작으면 -1을 출력한다.
+
+
+```python
+_, K = map(int, input().split())
+A = [int(i) for i in input().split()]
+
+def merge_sort(lst, p, r, l):
+    if p < r:
+        q = (p + r) // 2
+        l = merge_sort(lst, p, q, l)
+        if l == 0: return 0
+        l = merge_sort(lst, q+1, r, l)
+        if l == 0: return 0
+        return merge(lst, p, q, r, l)
+    return l
+
+def merge(lst, p, q, r, l):
+    i, j, t = p, q+1, 0
+    tmp = []
+    while i <= q and j <= r:
+        if lst[i] <= lst[j]:
+            tmp.append(lst[i])
+            t += 1; i += 1
+        else:
+            tmp.append(lst[j])
+            t += 1; j += 1
+        l -= 1
+        # print(f"{p} {q} {r} {tmp}")
+        # print(f"\t{A}")
+        if l == 0: print(tmp[t-1]); return 0;
+    while i <= q:
+        tmp.append(lst[i])
+        t += 1; i += 1
+        l -= 1
+        # print(f"{p} {q} {r} {tmp}")
+        # print(f"\t{A}")
+        if l == 0: print(tmp[t-1]); return 0;
+    while j <= r:
+        tmp.append(lst[j])
+        t += 1; j += 1
+        l -= 1
+        # print(f"{p} {q} {r} {tmp}")
+        # print(f"\t{A}")
+        if l == 0: print(tmp[t-1]); return 0;
+    lst[p:r+1] = [i for i in tmp]
+    # print(f"\t{A}")
+    return l
+
+if merge_sort(A, 0, len(A)-1, K) > 0: print(-1)
+```
+
+    5 8
+    4 5 1 3 2
+    1
+    
+
+
+```python
+# short coding
+def find(s, e):
+    global K
+    if s == e: return
+    m = (s+e) // 2
+    find(s, m)
+    find(m+1, e)
+    if K <= e-s+1:
+        J = sorted(I[s:e+1])
+        print(J[K-1])
+        exit()
+    K -= e-s+1
+N, K = map(int, input().split())
+I = list(map(int,input().split()))
+find(0, N-1)
+print(-1)
+```
+
+    5 13
+    4 5 1 3 2
+    -1
+    
+
+[2447번: 별 찍기 - 10](https://www.acmicpc.net/problem/2447)
+
+재귀적인 패턴으로 별을 찍어 보자. N이 3의 거듭제곱(3, 9, 27, ...)이라고 할 때, 크기 N의 패턴은 N×N 정사각형 모양이다.
+
+크기 3의 패턴은 가운데에 공백이 있고, 가운데를 제외한 모든 칸에 별이 하나씩 있는 패턴이다.
+
+N이 3보다 클 경우, 크기 N의 패턴은 공백으로 채워진 가운데의 (N/3)×(N/3) 정사각형을 크기 N/3의 패턴으로 둘러싼 형태이다.
+
+
+```python
+def star_lines(n):
+    if n == 1:
+        return ['*']
+    pre = star_lines(n//3)
+    side = [line * 3 for line in pre]
+    mid = [line + ' '*(n//3) + line for line in pre]
+    return side + mid + side
+for line in star_lines(int(input())):
+    print(line)
+```
+
+    27
+    ***************************
+    * ** ** ** ** ** ** ** ** *
+    ***************************
+    ***   ******   ******   ***
+    * *   * ** *   * ** *   * *
+    ***   ******   ******   ***
+    ***************************
+    * ** ** ** ** ** ** ** ** *
+    ***************************
+    *********         *********
+    * ** ** *         * ** ** *
+    *********         *********
+    ***   ***         ***   ***
+    * *   * *         * *   * *
+    ***   ***         ***   ***
+    *********         *********
+    * ** ** *         * ** ** *
+    *********         *********
+    ***************************
+    * ** ** ** ** ** ** ** ** *
+    ***************************
+    ***   ******   ******   ***
+    * *   * ** *   * ** *   * *
+    ***   ******   ******   ***
+    ***************************
+    * ** ** ** ** ** ** ** ** *
+    ***************************
+    
+
+[11729번: 하노이 탑 이동 순서](https://www.acmicpc.net/problem/11729)
+
+하노이 탑의 이동 순서를 출력하는 프로그램을 작성하라. 단, 이동 횟수는 최소가 되어야 한다.
+
+
+```python
+a = [1]
+a += [2, 3]
+a
+```
+
+
+
+
+    [1, 2, 3]
+
+
+
+
+```python
+def hanoi(n, s='1', m='2', e='3'):
+    a = []
+    if n > 1:
+        a += hanoi(n-1, s, e, m)
+    a.append(s + " " + e)
+    if n > 1:
+        a += hanoi(n-1, m, s, e)
+    return a
+result = hanoi(int(input()))
+print(len(result))
+print('\n'.join(result))
+```
+
+    3
+    7
+    1 3
+    1 2
+    3 2
+    1 3
+    2 1
+    2 3
+    1 3
+    
+
+### [집합과 맵](https://www.acmicpc.net/step/49)
+
+특정 원소가 속해 있는지 빠르게 찾거나, 각 원소에 대응되는 원소를 빠르게 찾는 자료구조를 배워 봅시다.
+
+[10815번: 숫자 카드](https://www.acmicpc.net/problem/10815)
+
+숫자 카드는 정수 하나가 적혀져 있는 카드이다. 상근이는 숫자 카드 N개를 가지고 있다. 정수 M개가 주어졌을 때, 이 수가 적혀있는 숫자 카드를 상근이가 가지고 있는지 아닌지를 구하는 프로그램을 작성하시오.
+
+
+```python
+int(True)
+```
+
+
+
+
+    1
+
+
+
+
+```python
+# inefficient code
+input()
+nums = [int(i) for i in input().split()]
+input()
+print(*[int(int(i) in nums) for i in input().split()])
+```
+
+    5
+    6 3 2 10 -10
+    8
+    10 9 -5 2 3 4 5 -10
+    1 0 0 1 1 0 0 1
+    
+
+
+```python
+not []
+```
+
+
+
+
+    True
+
+
+
+
+```python
+# efficient code
+input()
+nums = sorted([int(i) for i in input().split()])
+input()
+# list를 분할해서 새로 저장하는 것은 O(N)으로 무거운 연산..
+# list는 그대로 두고 index만 바꾸는 방식으로 정렬해야 함!
+def search(sorted_lst, s, e, n):
+    if s >= e: return False
+    mid = (s+e)//2
+    if n == sorted_lst[mid]: return True
+    if n < sorted_lst[mid]:
+        return search(sorted_lst, s, mid, n)
+    return search(sorted_lst, mid+1, e, n)
+print(*[int(search(nums, 0, len(nums), int(i))) for i in input().split()])
+```
+
+    5
+    6 3 2 10 -10
+    8
+    10 9 -5 2 3 4 5 -10
+    1 0 0 1 1 0 0 1
+    
+
+### [기하 1](https://www.acmicpc.net/step/50)
+
+다양한 기하 문제를 연습해 봅시다.
+
+[1085번: 직사각형에서 탈출](https://www.acmicpc.net/problem/1085)
+
+한수는 지금 (x, y)에 있다. 직사각형은 각 변이 좌표축에 평행하고, 왼쪽 아래 꼭짓점은 (0, 0), 오른쪽 위 꼭짓점은 (w, h)에 있다. 직사각형의 경계선까지 가는 거리의 최솟값을 구하는 프로그램을 작성하시오.
+
+
+```python
+x, y, w, h = map(int, input().split())
+print(min(x, y, w-x, h-y))
+```
+
+    653 375 1000 1000
+    347
+    
+
+[3009번: 네 번째 점](https://www.acmicpc.net/problem/3009)
+
+세 점이 주어졌을 때, 축에 평행한 직사각형을 만들기 위해서 필요한 네 번째 점을 찾는 프로그램을 작성하시오.
+
+
+```python
+xs, ys = [], []
+for _ in range(3):
+    x, y = map(int, input().split())
+    xs.append(x)
+    ys.append(y)
+x = sorted({*xs}, key=xs.count)[0]
+y = sorted({*ys}, key=ys.count)[0]
+print(f'{x} {y}')
+```
+
+    5 5
+    5 7
+    7 5
+    7 7
+    
+
+[4153번: 직각삼각형](https://www.acmicpc.net/problem/4153)
+
+과거 이집트인들은 각 변들의 길이가 3, 4, 5인 삼각형이 직각 삼각형인것을 알아냈다. 주어진 세변의 길이로 삼각형이 직각인지 아닌지 구분하시오.
+
+
+```python
+while True:
+    a, b, c = sorted([int(i) for i in input().split()])
+    if not c: break
+    print('right' if c*c==a*a+b*b else 'wrong')       
+```
+
+    6 8 10
+    right
+    25 52 60
+    wrong
+    5 12 13
+    right
+    0 0 0
+    
+
+[2477번: 참외밭](https://www.acmicpc.net/problem/2477)
+
+단위 넓이에 자라는 참외의 개수와, 참외밭을 이루는 육각형의 임의의 한 꼭짓점에서 출발하여 반시계방향으로 둘레를 돌면서 지나는 변의 방향과 길이가 순서대로 주어진다. 이 참외밭에서 자라는 참외의 수를 구하는 프로그램을 작성하시오.
+
+
+```python
+u = int(input())
+lengths = [int(input().split()[1]) for _ in range(6)]
+mi = [0, 1]
+for i in range(2, 6):
+    if lengths[i] > lengths[mi[i%2]]:
+        mi[i%2] = i
+area = lengths[mi[0]] * lengths[mi[1]]
+if mi == [0, 5]:
+    area -= lengths[2] * lengths[3]
+else:
+    area -= lengths[(min(mi)+3)%6] * lengths[(min(mi)+4)%6]
+print(u * area)
+```
+
+    7
+    4 50
+    2 160
+    3 30
+    1 60
+    3 20
+    1 100
+    47600
+    
+
+[3053번: 택시 기하학](https://www.acmicpc.net/problem/3053)
+
+반지름 R이 주어졌을 때, 유클리드 기하학에서 원의 넓이와, 택시 기하학에서 원의 넓이를 구하는 프로그램을 작성하시오.
+
+
+```python
+from math import pi
+R = float(input())
+print(f"{pi*R*R:.6f}")
+print(f"{2*R*R:.6f}")
+```
+
+    1
+    3.141593
+    2.000000
+    
+
+[1002번: 터렛](https://www.acmicpc.net/problem/1002)
+
+조규현의 좌표 (x1, y1)와 백승환의 좌표 (x2, y2)가 주어지고, 조규현이 계산한 류재명과의 거리 r1과 백승환이 계산한 류재명과의 거리 r2가 주어졌을 때, 류재명이 있을 수 있는 좌표의 수를 출력하는 프로그램을 작성하시오.
+
+
+```python
+T = int(input())
+for _ in range(T):
+    x1, y1, r1, x2, y2, r2 = [int(x) for x in input().split()]
+    dist = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+    r_sum = r1 + r2
+    diff = ((r1 - r2) ** 2) ** 0.5
+    if not dist and not diff:
+        print(-1)
+    elif dist in [r_sum, diff]:
+        print(1)
+    elif diff < dist < r_sum:
+        print(2)
+    else:
+        print(0)
+```
+
+    3
+    0 0 13 40 0 37
+    2
+    0 0 3 0 7 4
+    1
+    1 1 1 1 1 5
+    0
+    
+
+[1004번: 어린 왕자](https://www.acmicpc.net/problem/1004)
+
+은하수 지도, 출발점, 도착점이 주어졌을 때 어린 왕자에게 필요한 최소의 행성계 진입/이탈 횟수를 구하는 프로그램을 작성해 보자. 행성계의 경계가 맞닿거나 서로 교차하는 경우는 없다. 또한, 출발점이나 도착점이 행성계 경계에 걸쳐진 경우 역시 입력으로 주어지지 않는다.
+
+
+```python
+T = int(input())
+
+for _ in range(T):
+    x1, y1, x2, y2 = [int(x) for x in input().split()]
+    n = int(input())
+    cnt = 0
+    for i in range(n):
+        cx, cy, r = [int(x) for x in input().split()]
+        cnt += 0 if ((x1 - cx) ** 2 + (y1 - cy) ** 2 > r ** 2) == ((x2 - cx) ** 2 + (y2 - cy) ** 2 > r ** 2) else 1
+    print(cnt)
+```
+
+    2
+    -5 1 12 1
+    7
+    1 1 8
+    -3 -1 1
+    2 2 2
+    5 5 1
+    -4 5 1
+    12 1 1
+    12 1 2
+    3
+    -5 1 5 1
+    1
+    0 0 2
+    0
+    
+
+### [정수론 및 조합론](https://www.acmicpc.net/step/18)
+
+정수론과 조합론을 배워 봅시다.
+
+[2981번: 검문](https://www.acmicpc.net/problem/2981)
+
+먼저 근처에 보이는 숫자 N개를 종이에 적는다. 그 다음, 종이에 적은 수를 M으로 나누었을 때, 나머지가 모두 같게 되는 M을 모두 찾으려고 한다. M은 1보다 커야 한다. N개의 수가 주어졌을 때, 가능한 M을 모두 찾는 프로그램을 작성하시오.
+
+
+```python
+# inefficient code
+nums = [int(input()) for _ in range(int(input()))]
+min_num = min(nums)
+nums = [n-min_num for n in nums if n != min_num]
+while len(nums) > 1:
+    d = min(nums)
+    temp = {d}
+    for n in nums:
+        r = n % d
+        if r > 0: temp.add(r)
+    nums = list(temp)
+d = nums[0]
+print(' '.join([str(i) for i in range(2, d+1) if not d%i]))
+```
+
+    3
+    6
+    34
+    38
+    2 4
+    
+
+
+```python
+# efficient code
+def gcd(a, b):
+    c = min(a, b)
+    d = max(a, b)
+    if not c: return d
+    return gcd(c, d%c)
+nums = [int(input()) for _ in range(int(input()))]
+min_num = min(nums)
+d, *nums = [n-min_num for n in nums if n != min_num]
+for num in nums:
+    d = gcd(d, num)
+ds = {d}
+for i in range(2, int(d**0.5)+1):
+    if not d % i:
+        ds.add(i)
+        ds.add(d//i)
+print(*sorted(list(ds)))
+```
+
+    3
+    6
+    34
+    38
+    2 4
+    
+
+## Arduino Project
+
+baekjoon solver💻
+
+### LCD display
+
+교과서 p84-86 (1602 LCD)
+
+지난 시간 세팅을 그대로 이용합니다! 코드가 제대로 실행되는지 확인해보세요😆
+
+<img src="https://drive.google.com/uc?export=download&id=1Is9gw54qaOvjkTNVi1ZRsC2ljT2qrRBy" width=500>
+
+```cpp
+// include the library code:
+#include <LiquidCrystal.h>
+
+// initialize the library by associating any needed LCD interface pin
+// with the arduino pin number it is connected to
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+void setup() {
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  // Print a message to the LCD.
+  lcd.print("hello, world!");
+}
+
+void loop() {
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting begins with 0):
+  lcd.setCursor(0, 1);
+  // print the number of seconds since reset:
+  lcd.print(millis() / 1000);
+}
+```
+
+### Python으로 아두이노 제어하기
+
+[파이썬으로 제어하기](https://return-value.tistory.com/76)
+
+
+```python
+#!pip install pyserial
+```
+
+    Requirement already satisfied: pyserial in c:\users\hsmai\appdata\local\programs\python\python37\lib\site-packages (3.5)
+    
+
+오늘은 Jupyter Notebook 사용이 불가피합니다..😂😂
+
+Command Prompt를 실행하셔서 `pip install notebook`로 Jupyter Notebook을 설치합니다!
+
+실행은 더 간단합니다. 설치가 완료된 뒤 `jupyter notebook`를 입력하세요!
+
+#### Arduino code
+
+```cpp
+#include <LiquidCrystal.h>
+
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+int input_data;
+
+void setup() {
+  Serial.begin(9600);
+  lcd.begin(16, 2);
+  lcd.print("hello, world!");
+}
+
+void loop() {
+  if(Serial.available()) {
+    lcd.setCursor(0, 0);
+    input_data = Serial.read();
+    if(input_data == '1')
+      lcd.print("hello, world!");
+    else
+      lcd.print("bye, world!  ");
+  }
+  lcd.setCursor(0, 1);
+  lcd.print(millis() / 1000);
+}
+```
+
+#### Python code
+
+
+```python
+import serial
+import time
+
+# 'COM7' 부분에 환경에 맞는 포트 입력
+ser = serial.Serial('COM7', 9600)
+
+while True:
+    if ser.readable():
+        val = input()
+
+        if val == '1':
+            val = val.encode('utf-8')
+            ser.write(val)
+            print("😆")
+            time.sleep(0.5)
+
+        elif val == '0':
+            val = val.encode('utf-8')
+            ser.write(val)
+            print("😭")
+            time.sleep(0.5)
+            
+        elif val == '2':
+            ser.close()
+            break
+```
+
+    0
+    😭
+    1
+    😆
+    0
+    😭
+    1
+    😆
+    2
+    
+
+만약 코드를 다시 실행하는데 에러가 발생한다면, 아래 코드를 실행하고 다시 시도해보세요!
+
+
+```python
+ser.close()
+```
+
+### Message from Python to Arduino🐦
+
+[시리얼 통신으로 문자열 보내는 방법](https://doomed-lab.tistory.com/5)
+
+#### Arduino code
+
+```cpp
+#include <LiquidCrystal.h>
+
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+int input_data;
+
+void setup() {
+  Serial.begin(9600);
+  lcd.begin(16, 2);
+  lcd.print("Baekjoon Solver");
+}
+
+void loop() {
+  if(Serial.available()) {
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    String str = "";
+    while(Serial.available()) {
+      char ch = Serial.read();
+      str.concat(ch);
+    }
+    lcd.setCursor(0, 1);
+    lcd.print(str);
+  }
+}
+```
+
+#### Python code
+
+
+```python
+import serial
+import time
+
+# 'COM7' 부분에 환경에 맞는 포트 입력
+ser = serial.Serial('COM7', 9600)
+
+while True:
+    if ser.readable():
+        val = input()
+
+        if val == 'end':
+            ser.close()
+            break
+
+        else:
+            val.replace
+            val = val.encode('utf-8')
+            ser.write(val)
+            print("👍")
+            time.sleep(0.5)
+```
+
+### Baekjoon solver
+
+파이썬으로 입력값을 넣으면 아두이노 디스플레이에 출력값이 나오는 시스템을 구현해봅시다!
+
+[시리얼 통신으로 문자열 보내는 방법](https://doomed-lab.tistory.com/5)
+
+#### Arduino code
+
+앞선 예제의 코드를 그대로 활용합니다!
+
+#### Python
+
+원하는 백준 문제의 코드를 이용하세요!
+
+예시로는 [1157번: 단어 공부](https://www.acmicpc.net/problem/1157) 코드를 사용했습니다!
+
+```python
+word = input().upper()
+counts = {}
+for letter in word:
+    if letter in counts:
+        counts[letter] += 1
+    else:
+        counts[letter] = 1
+sorted_counts = sorted(counts.items(), key=lambda item: item[1], reverse=True)
+if len(sorted_counts) >= 2 and sorted_counts[0][1] == sorted_counts[1][1]:
+    print('?')
+else:
+    print(sorted_counts[0][0])
+```
+
+
+```python
+import serial
+import time
+
+# 'COM7' 부분에 환경에 맞는 포트 입력
+ser = serial.Serial('COM7', 9600)
+
+def baekjoon_solver():
+    word = input().upper()
+    if word == 'END':
+        return 'end'
+    counts = {}
+    for letter in word:
+        if letter in counts:
+            counts[letter] += 1
+        else:
+            counts[letter] = 1
+    sorted_counts = sorted(counts.items(), key=lambda item: item[1], reverse=True)
+    if len(sorted_counts) >= 2 and sorted_counts[0][1] == sorted_counts[1][1]:
+        return '?'
+    else:
+        return sorted_counts[0][0]
+
+while True:
+    if ser.readable():
+        val = baekjoon_solver()
+
+        if val == 'end':
+            ser.close()
+            print('Bye😭')
+            break
+
+        else:
+            val_ = val.encode('utf-8')
+            ser.write(val_)
+            print(f"👍 '{val}' printed!")
+            time.sleep(0.5)
+```
+
+    happy
+    👍 'P' printed!
+    mississipi
+    👍 '?' printed!
+    bye
+    👍 '?' printed!
+    end
+    Bye😭
+    
