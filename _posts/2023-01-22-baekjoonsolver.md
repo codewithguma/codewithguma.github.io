@@ -10,8 +10,6 @@ tags:
   - 서빈
 ---
 
-# Baekjoon Solver Project
-
 <img src="https://drive.google.com/uc?export=download&id=1Is9gw54qaOvjkTNVi1ZRsC2ljT2qrRBy" width=500>
 
 ## Arduino code
