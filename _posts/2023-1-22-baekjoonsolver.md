@@ -50,7 +50,17 @@ if len(sorted_counts) >= 2 and sorted_counts[0][1] == sorted_counts[1][1]:
 else:
     print(sorted_counts[0][0])
 ```
-
+---
+layout: single
+title: "1004: Little Prince"
+categories:
+  - arduino
+tags:
+  - 현수
+  - 하람
+  - 종원
+  - 서빈
+---
 
 ```python
 import serial
