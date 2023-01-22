@@ -111,4 +111,4 @@ while True:
 
 ## Results
 
-![arduino](arduino.gif)
+![arduino](https://github.com/codewithguma/codewithguma.github.io/raw/master/_posts/arduino.gif)
